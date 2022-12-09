@@ -1,10 +1,7 @@
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tp2.R
 import com.example.tp2.Student
@@ -12,11 +9,14 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class StudentListAdapter(var students: ArrayList<Student>) :
-    RecyclerView.Adapter<StudentListAdapter.ViewHolder>() {
+    RecyclerView.Adapter<StudentListAdapter.ViewHolder>(), Filterable {
     var dataFilterList = ArrayList<Student>()
+    var preFilter = ArrayList<Student>()
+
 
     init {
         dataFilterList = students
+        preFilter=students
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -66,21 +66,56 @@ class StudentListAdapter(var students: ArrayList<Student>) :
             if (!student.present)
                 resultList.add(student)
         }
-        dataFilterList=resultList
+        dataFilterList = resultList
+        preFilter=resultList
         notifyDataSetChanged();
     }
+
     fun filterPresent() {
         val resultList = ArrayList<Student>()
         for (student in students) {
             if (student.present)
                 resultList.add(student)
         }
-        dataFilterList=resultList
+        dataFilterList = resultList
+        preFilter=resultList
         notifyDataSetChanged();
     }
-    fun noFilter(){
-        dataFilterList=students
+
+    fun noFilter() {
+        dataFilterList = students
+        preFilter=students
         notifyDataSetChanged();
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString()
+                if (charSearch.isEmpty()) {
+                    dataFilterList = preFilter
+                } else {
+                    val resultList = ArrayList<Student>()
+                    for (student in preFilter) {
+                        if (student.nom.lowercase(Locale.ROOT)
+                                .contains(charSearch.lowercase(Locale.ROOT))
+                        ) {
+                            resultList.add(student)
+                        }
+                    }
+                    dataFilterList = resultList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = dataFilterList
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                dataFilterList = results?.values as ArrayList<Student>
+                notifyDataSetChanged()
+            }
+
+        }
     }
 
 

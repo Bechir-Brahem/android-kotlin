@@ -3,6 +3,8 @@ package com.example.tp2
 import StudentListAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,13 +15,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var nRB: RadioButton
     lateinit var aRB: RadioButton
     lateinit var pRB: RadioButton
+    lateinit var txtEdit: EditText
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        spinnerView = findViewById(R.id.spinner)
         nRB = findViewById(R.id.nRB)
         aRB = findViewById(R.id.aRB)
         pRB = findViewById(R.id.pRB)
@@ -51,6 +53,19 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
+        val filter=studentListAdapter.filter
+        txtEdit = findViewById(R.id.editTextTextPersonName)
+        txtEdit.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                filter.filter("$p0")
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
 
 
     }
