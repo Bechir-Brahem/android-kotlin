@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TP1</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="insat_logo">INSAT LOGO</string>
+    <string name="login">login</string>
+    <string name="background">background</string>
+</resources>

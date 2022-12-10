@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">TP1</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="size">size</string>
+    <string name="ingredients">ingredients</string>
+    <string name="login">login</string>
+    <string name="background">background</string>
+
+    <string-array name="pizza_size">
+        <item>Mini</item>
+        <item>Moyenne</item>
+        <item>Maxi</item>
+    </string-array>
+
+    <string-array name="ingredients">
+        <item>Thon</item>
+        <item>Escalope</item>
+        <item>Ananas</item>
+    </string-array>
+</resources>
